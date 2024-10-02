@@ -1,5 +1,6 @@
 // store/index.js
 import {createStore} from 'vuex';
+import questions from '@/assets/questions.json';
 
 const store = createStore({
     state: {
@@ -79,8 +80,7 @@ const store = createStore({
         async fetchQuestions({commit}) {
             commit('SET_LOADING', true);
             try {
-                const response = await fetch('/src/assets/questions.json');
-                const data = await response.json();
+                const data = questions
                 commit('SET_QUESTIONS', data);
                 commit('SET_TOTAL_QUESTIONS', data.length);
             } catch (error) {
