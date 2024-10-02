@@ -10,6 +10,8 @@ const store = createStore({
         askingName: true,
         title: "Sorting hat",
         currentQuestion: null,
+        currentQuestionIndex: 0, // Use to track number of questions left.
+        totalQuestions: 1,
         scores: {g: 0, r: 0, h: 0, s: 0},
         questions: [],
         loading: true,
@@ -54,6 +56,12 @@ const store = createStore({
         SET_LOADING(state, loading) {
             state.loading = loading;
         },
+        SET_TOTAL_QUESTIONS(state, totalQuestions) {
+            state.totalQuestions = totalQuestions;
+        },
+        INCREASE_QUESTION_INDEX(state) {
+            state.currentQuestionIndex += 1
+        },
         RESET_CHAT(state) {
             state.messages = [
                 {text: 'Welcome to the Sorting Hat Test!', isUser: false},
@@ -64,6 +72,7 @@ const store = createStore({
             state.scores = {g: 0, r: 0, h: 0, s: 0};
             state.questions = [];
             state.loading = true;
+            state.currentQuestionIndex = 0;
         },
     },
     actions: {
@@ -73,6 +82,7 @@ const store = createStore({
                 const response = await fetch('/src/assets/questions.json');
                 const data = await response.json();
                 commit('SET_QUESTIONS', data);
+                commit('SET_TOTAL_QUESTIONS', data.length);
             } catch (error) {
                 console.error('Error fetching questions:', error);
             } finally {
@@ -86,6 +96,12 @@ const store = createStore({
         },
         getChatWindowTitle(state) {
             return state.title;
+        },
+        getTotalQuestions(state) {
+            return state.totalQuestions;
+        },
+        getRemainingQuestions(state) {
+            return state.totalQuestions - state.currentQuestionIndex
         },
     },
 });

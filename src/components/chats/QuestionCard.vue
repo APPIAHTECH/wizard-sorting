@@ -2,8 +2,20 @@
  This component will be used to display each question along with its multiple-choice answers.
  It emits an event when the user selects an answer.
  -->
+
 <template>
   <div class="question-card" ref="questionCard">
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div
+            class="progress-fill"
+            :style="{ width: progressBarWidth }"
+        ></div>
+      </div>
+      <p class="progress-text">
+        {{ progressText }}
+      </p>
+    </div>
     <p class="question-label">Please choose one option:</p>
     <h2 class="question-title">{{ question.title }}</h2>
     <div class="answers" ref="answersContainer">
@@ -20,6 +32,9 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
   name: "QuestionCard",
   props: {
@@ -27,6 +42,35 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    const store = useStore();
+    const totalQuestions = computed(() => store.getters.getTotalQuestions);
+    const currentIndex = computed(() => store.state.currentQuestionIndex); // Ensure this exists in your state
+
+    const progressBarWidth = computed(() => {
+      return `${((currentIndex.value) / totalQuestions.value) * 100}%`;
+    });
+
+    const remainingQuestions = computed(() => {
+      return store.getters.getRemainingQuestions
+    });
+
+    // New computed property for the progress text
+    const progressText = computed(() => {
+      if (remainingQuestions.value === 0) {
+        return "Last question";
+      }
+      return `${remainingQuestions.value} of ${totalQuestions.value} Questions left`;
+    });
+
+    return {
+      totalQuestions,
+      currentIndex,
+      progressBarWidth,
+      remainingQuestions,
+      progressText
+    };
   },
   methods: {
     selectAnswer(answer) {
@@ -59,6 +103,26 @@ export default {
   height: 850px;
   overflow: auto;
   border-top: 2px solid #F1F3F5;
+}
+
+.progress-bar {
+  background-color: #f1f1f1;
+  border-radius: 14px;
+  height: 5px;
+}
+
+.progress-fill {
+  background-color: rgb(48, 77, 219);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: right;
+  margin-top: 5px;
+  font-size: 0.9rem; /* Adjust size as necessary */
+  color: #333; /* Change color if needed */
 }
 
 .question-title {
@@ -95,12 +159,19 @@ export default {
   background-color: rgb(48, 77, 219);
 }
 
-.question-label{
+.question-label {
   color: rgb(126, 142, 158);
   font-size: 11px;
   font-weight: 400;
   line-height: 19px;
   box-sizing: border-box;
+  margin-bottom: 4px;
+}
+.progress-text{
+  color: rgb(126, 142, 158);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 19px;
   margin-bottom: 4px;
 }
 </style>

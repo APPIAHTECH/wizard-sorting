@@ -100,6 +100,7 @@ const handleAnswerSelected = (answer) => {
 const showNextQuestion = () => {
   if (questions.value.length > 0) {
     store.commit('SET_CURRENT_QUESTION', questions.value.shift());
+    store.commit('INCREASE_QUESTION_INDEX');
   } else {
     store.commit('SET_CURRENT_QUESTION', null);
     displayResults();
