@@ -129,7 +129,26 @@ export default {
             }
           ]
         },
-      ]
+      ],
+      scores: {g: 0, r: 0, h: 0, s: 0},
+      houseDescriptions: {
+        g: "Gryffindor — bravery, helping others and chivalry",
+        r: "Ravenclaw — intelligence, knowledge, planning ahead and wit",
+        h: "Hufflepuff — hard work, patience, loyalty and fair play",
+        s: "Slytherin — ambition, cunningness, heritage and resourcefulness",
+      },
+      randomResponses: [
+        "Interesting choice!",
+        "That's a unique perspective!",
+        "Fascinating decision!",
+        "I see what you did there!",
+        "That's quite intriguing!",
+        "Very interesting!",
+        "That's a bold choice!",
+        "You've made an interesting selection!",
+        "I like your reasoning behind that!",
+        "What a thoughtful choice!",
+      ],
     };
   },
   methods: {
@@ -149,15 +168,26 @@ export default {
       }
     },
     handleAnswerSelected(answer) {
+
+      // Randomly select a response
+      const randomIndex = Math.floor(Math.random() * this.randomResponses.length);
+      const randomResponse = this.randomResponses[randomIndex];
+
       // Handle the selected answer and continue the chat flow
       this.messages.push({
         text: `You selected: ${answer.title}`,
         isUser: true,
       });
 
+      // Update scores based on selected answer
+      this.scores.g += answer.scores.g || 0;
+      this.scores.r += answer.scores.r || 0;
+      this.scores.h += answer.scores.h || 0;
+      this.scores.s += answer.scores.s || 0;
+
       setTimeout(() => {
         this.messages.push({
-          text: `Interesting choice!`,
+          text: randomResponse,
           isUser: false,
         });
 
@@ -171,8 +201,21 @@ export default {
         this.currentQuestion = this.questions.shift();
       } else {
         this.currentQuestion = null;
-        this.messages.push({ text: 'That concludes the Sorting Hat Test!', isUser: false });
+        this.displayResults();
       }
+    },
+    displayResults() {
+      // Determine which house has the highest score
+      const houseScores = Object.entries(this.scores);
+      const highestHouse = houseScores.reduce((max, house) => (house[1] > max[1] ? house : max), [null, 0]);
+
+      // Get the description for the house
+      const houseDescription = this.houseDescriptions[highestHouse[0]] || "No house selected.";
+
+      this.messages.push({
+        text: `That concludes the Sorting Hat Test! You belong to: ${houseDescription}`,
+        isUser: false
+      });
     },
     scrollToBottom() {
       this.$nextTick(() => {
