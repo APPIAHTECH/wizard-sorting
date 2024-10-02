@@ -1,0 +1,221 @@
+<!--
+This component will render the chat conversation (messages from both the user and the bot).
+It also ensures smooth scrolling as new messages are added.
+ -->
+
+<script setup>
+import ChatBox from './ChatBox.vue';
+import InputBar from './InputBar.vue';
+import QuestionCard from './QuestionCard.vue';
+</script>
+
+<template>
+  <transition name="slide-up">
+    <div v-if="isOpen" class="chat-window">
+      <div class="chat-header">
+        <h3>{{ title }}</h3>
+        <button
+            @click="toggleChat">X
+        </button>
+      </div>
+
+      <ChatBox :messages="messages" ref="chatBox"/>
+
+      <QuestionCard v-if="currentQuestion" :question="currentQuestion" @answer-selected="handleAnswerSelected"/>
+
+      <InputBar v-if="!currentQuestion" @message-sent="handleUserMessage"/>
+    </div>
+  </transition>
+</template>
+
+<script>
+
+export default {
+  props: {
+    isOpen: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      messages: [
+        {text: 'Welcome to the Sorting Hat Test!', isUser: false},
+        {text: 'What is your name?', isUser: false},
+      ],
+      askingName: true,
+      currentQuestion: null, // Tracks the current question to display
+      title: "Wizard Sorting Hat test",
+      questions: [
+        {
+          "title": "Dawn or dusk?",
+          "answers": [
+            {
+              "title": "Dawn",
+              "scores": {
+                "g": 100,
+                "r": 100,
+                "h": 0,
+                "s": 0
+              }
+            },
+            {
+              "title": "Dusk",
+              "scores": {
+                "g": 0,
+                "r": 0,
+                "h": 100,
+                "s": 100
+              }
+            }
+          ]
+        },
+        {
+          "title": "A troll has gone beserk in the Headmaster's study at Hogwarts.  It is about to smash, crush and tear several irreplaceable items and treasures. In which order would you rescue these objects from the troll's club, if you could?",
+          "answers": [
+            {
+              "title": "First, a nearly perfected cure for dragon pox. Then student records going back 1000 years. Finally, a mysterious handwritten book full of strange runes.",
+              "scores": {
+                "g": 100,
+                "r": 0,
+                "h": 100,
+                "s": 0
+              }
+            },
+            {
+              "title": "First, student records going back 1000 years. Then a mysterious handwritten book full of strange runes. Finally, a nearly perfected cure for dragon pox.",
+              "scores": {
+                "g": 0,
+                "r": 0,
+                "h": 0,
+                "s": 100
+              }
+            },
+            {
+              "title": "First, a mysterious handwritten book full of strange runes. Then a nearly perfected cure for dragon pox. Finally, student records going back 1000 years.",
+              "scores": {
+                "g": 0,
+                "r": 100,
+                "h": 0,
+                "s": 0
+              }
+            },
+            {
+              "title": "First, a nearly perfected cure for dragon pox. Then a mysterious handwritten book full of strange runes. Finally, student records going back 1000 years.",
+              "scores": {
+                "g": 100,
+                "r": 0,
+                "h": 0,
+                "s": 0
+              }
+            },
+            {
+              "title": "First student records going back 1000 years. Then, a nearly perfected cure for dragon pox. Finally, a mysterious handwritten book full of strange runes.",
+              "scores": {
+                "g": 0,
+                "r": 0,
+                "h": 100,
+                "s": 0
+              }
+            },
+            {
+              "title": "First,  a mysterious handwritten book full of strange runes. Then student records going back 1000 years. Finally, a nearly perfected cure for dragon pox.",
+              "scores": {
+                "g": 0,
+                "r": 100,
+                "h": 0,
+                "s": 100
+              }
+            }
+          ]
+        },
+      ]
+    };
+  },
+  methods: {
+    toggleChat() {
+      this.$emit('toggle-chat');
+    },
+    handleUserMessage(message) {
+      if (this.askingName) {
+        this.messages.push({text: message, isUser: true});
+
+        setTimeout(() => {
+          this.messages.push({text: `Nice to meet you, ${message}! Let’s begin the test...`, isUser: false});
+          this.askingName = false;
+          this.scrollToBottom();
+          this.showNextQuestion();
+        }, 1000);
+      }
+    },
+    handleAnswerSelected(answer) {
+      // Handle the selected answer and continue the chat flow
+      this.messages.push({
+        text: `You selected: ${answer.title}`,
+        isUser: true,
+      });
+
+      setTimeout(() => {
+        this.messages.push({
+          text: `Interesting choice!`,
+          isUser: false,
+        });
+
+        // Show the next question or end the quiz
+        this.showNextQuestion();
+      }, 1000);
+    },
+    showNextQuestion() {
+      // If there are questions left, show the next one
+      if (this.questions.length > 0) {
+        this.currentQuestion = this.questions.shift();
+      } else {
+        this.currentQuestion = null;
+        this.messages.push({ text: 'That concludes the Sorting Hat Test!', isUser: false });
+      }
+    },
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const chatBox = this.$refs.chatBox;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+    },
+  },
+};
+</script>
+
+<style scoped>
+.chat-window {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background-color: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #007aff;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-up-enter, .slide-up-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
+</style>
