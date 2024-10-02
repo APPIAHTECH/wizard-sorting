@@ -16,7 +16,3 @@ const toggleChat = () => {
     <ChatWindow v-if="isChatOpen" @toggle-chat="toggleChat" :isOpen="isChatOpen" />
   </div>
 </template>
-
-<style scoped>
-/* You can add specific styles for the chat view here */
-</style>

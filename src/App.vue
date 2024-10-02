@@ -18,7 +18,7 @@ import {RouterLink, RouterView} from 'vue-router'
 
 <style>
 body, p, h1,h2,h3,h4,h5,h6 {
-  font-family: "Lato", sans-serif;
+  font-family: 'Roboto', "Lato", sans-serif;
   font-weight: 100;
   font-style: normal;
 }
