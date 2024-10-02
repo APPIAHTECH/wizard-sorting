@@ -3,9 +3,9 @@
  It emits an event when the user selects an answer.
  -->
 <template>
-  <div class="question-card">
+  <div class="question-card" ref="questionCard">
     <h2 class="question-title">{{ question.title }}</h2>
-    <div class="answers">
+    <div class="answers" ref="answersContainer">
       <button
           v-for="(answer, index) in question.answers"
           :key="index"
@@ -30,6 +30,20 @@ export default {
   methods: {
     selectAnswer(answer) {
       this.$emit("answer-selected", answer);
+      this.scrollToTop();
+    },
+    scrollToTop() {
+      const card = this.$refs.questionCard;
+      const answers = this.$refs.answersContainer;
+
+      card.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      answers.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     },
   },
 };

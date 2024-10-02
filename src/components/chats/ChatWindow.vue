@@ -46,90 +46,8 @@ export default {
       askingName: true,
       currentQuestion: null, // Tracks the current question to display
       title: "Wizard Sorting Hat test",
-      questions: [
-        {
-          "title": "Dawn or dusk?",
-          "answers": [
-            {
-              "title": "Dawn",
-              "scores": {
-                "g": 100,
-                "r": 100,
-                "h": 0,
-                "s": 0
-              }
-            },
-            {
-              "title": "Dusk",
-              "scores": {
-                "g": 0,
-                "r": 0,
-                "h": 100,
-                "s": 100
-              }
-            }
-          ]
-        },
-        {
-          "title": "A troll has gone beserk in the Headmaster's study at Hogwarts.  It is about to smash, crush and tear several irreplaceable items and treasures. In which order would you rescue these objects from the troll's club, if you could?",
-          "answers": [
-            {
-              "title": "First, a nearly perfected cure for dragon pox. Then student records going back 1000 years. Finally, a mysterious handwritten book full of strange runes.",
-              "scores": {
-                "g": 100,
-                "r": 0,
-                "h": 100,
-                "s": 0
-              }
-            },
-            {
-              "title": "First, student records going back 1000 years. Then a mysterious handwritten book full of strange runes. Finally, a nearly perfected cure for dragon pox.",
-              "scores": {
-                "g": 0,
-                "r": 0,
-                "h": 0,
-                "s": 100
-              }
-            },
-            {
-              "title": "First, a mysterious handwritten book full of strange runes. Then a nearly perfected cure for dragon pox. Finally, student records going back 1000 years.",
-              "scores": {
-                "g": 0,
-                "r": 100,
-                "h": 0,
-                "s": 0
-              }
-            },
-            {
-              "title": "First, a nearly perfected cure for dragon pox. Then a mysterious handwritten book full of strange runes. Finally, student records going back 1000 years.",
-              "scores": {
-                "g": 100,
-                "r": 0,
-                "h": 0,
-                "s": 0
-              }
-            },
-            {
-              "title": "First student records going back 1000 years. Then, a nearly perfected cure for dragon pox. Finally, a mysterious handwritten book full of strange runes.",
-              "scores": {
-                "g": 0,
-                "r": 0,
-                "h": 100,
-                "s": 0
-              }
-            },
-            {
-              "title": "First,  a mysterious handwritten book full of strange runes. Then student records going back 1000 years. Finally, a nearly perfected cure for dragon pox.",
-              "scores": {
-                "g": 0,
-                "r": 100,
-                "h": 0,
-                "s": 100
-              }
-            }
-          ]
-        },
-      ],
+      questions: [],
+      loading: true,
       scores: {g: 0, r: 0, h: 0, s: 0},
       houseDescriptions: {
         g: "Gryffindor — bravery, helping others and chivalry",
@@ -150,6 +68,9 @@ export default {
         "What a thoughtful choice!",
       ],
     };
+  },
+  mounted() {
+    this.fetchQuestions()
   },
   methods: {
     toggleChat() {
@@ -195,6 +116,7 @@ export default {
         this.showNextQuestion();
       }, 1000);
     },
+
     showNextQuestion() {
       // If there are questions left, show the next one
       if (this.questions.length > 0) {
@@ -204,6 +126,7 @@ export default {
         this.displayResults();
       }
     },
+
     displayResults() {
       // Determine which house has the highest score
       const houseScores = Object.entries(this.scores);
@@ -217,11 +140,23 @@ export default {
         isUser: false
       });
     },
+
     scrollToBottom() {
       this.$nextTick(() => {
         const chatBox = this.$refs.chatBox;
         chatBox.scrollTop = chatBox.scrollHeight;
       });
+    },
+    async fetchQuestions() {
+      try {
+        const response = await fetch('/src/assets/questions.json');
+        const data = await response.json();
+        this.questions = data;
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
