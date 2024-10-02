@@ -43,8 +43,8 @@ export default {
 .chat-box {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  height: 400px;
+  padding: 14px 18px 0px;
+  height: 100%;
   overflow-y: auto;
   background-color: white;
 }

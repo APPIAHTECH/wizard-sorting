@@ -3,8 +3,12 @@ The component for a single message in the chat.
  -->
 
 <template>
-  <div :class="['chat-message', isUser ? 'user' : 'bot']">
-    <p>{{ message }}</p>
+  <div :class="['chat-container', isUser ? 'user' : 'bot']">
+    <!-- Render the AI assistant label when the bot is speaking -->
+    <div v-if="!isUser" class="bot-label">Hat assistant</div>
+    <div :class="['chat-message', isUser ? 'user' : 'bot']">
+      <p>{{ message }}</p>
+    </div>
   </div>
 </template>
 
@@ -24,21 +28,43 @@ export default {
 </script>
 
 <style scoped>
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.chat-container.user {
+  align-items: flex-end;
+}
+
+.chat-container.bot {
+  align-items: flex-start;
+}
+
 .chat-message {
-  padding: 10px;
-  margin: 10px;
+  padding: 20px 24px;
+  margin: 0 0px 24px;
   border-radius: 10px;
-  max-width: 75%;
   word-wrap: break-word;
+  box-sizing: border-box;
+  background-color: #f1f3f5;
+  border-color: #f1f3f5;
+  max-width: 75%;
 }
 
 .chat-message.user {
-  background-color: #daf8cb;
-  align-self: flex-end;
+  background-color: rgb(48, 77, 219);
+  border-bottom-right-radius: 4px;
+  color: white;
 }
 
-.chat-message.bot {
-  background-color: #f1f0f0;
-  align-self: flex-start;
+.bot-label {
+  color: rgb(126, 142, 158);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 19px;
+  box-sizing: border-box;
+  margin-bottom: 4px;
 }
 </style>

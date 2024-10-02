@@ -4,6 +4,7 @@
  -->
 <template>
   <div class="question-card" ref="questionCard">
+    <p class="question-label">Please choose one option:</p>
     <h2 class="question-title">{{ question.title }}</h2>
     <div class="answers" ref="answersContainer">
       <button
@@ -52,12 +53,12 @@ export default {
 <style scoped>
 .question-card {
   background-color: #fff;
-  border-radius: 10px;
   padding: 20px;
   margin: 20px 0;
   max-width: 100%;
-  height: 100%;
+  height: 850px;
   overflow: auto;
+  border-top: 2px solid #F1F3F5;
 }
 
 .question-title {
@@ -65,19 +66,21 @@ export default {
   margin-bottom: 15px;
   line-height: 1.5;
   word-wrap: break-word;
+  font-weight: 400;
+  box-sizing: border-box;
 }
 
 .answers {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 300px;
   overflow-y: auto;
 }
 
 .answer-button {
   padding: 15px;
-  background-color: #f0f0f0;
+  background-color: #121212;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -89,11 +92,15 @@ export default {
 }
 
 .answer-button:hover {
-  background-color: #e0e0e0;
+  background-color: rgb(48, 77, 219);
 }
 
-.answer-button:focus {
-  outline: none;
-  background-color: #d0d0d0;
+.question-label{
+  color: rgb(126, 142, 158);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 19px;
+  box-sizing: border-box;
+  margin-bottom: 4px;
 }
 </style>
