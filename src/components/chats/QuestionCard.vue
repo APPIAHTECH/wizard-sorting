@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
+import {computed} from 'vue';
+import {useStore} from 'vuex';
 
 export default {
   name: "QuestionCard",
@@ -81,14 +81,17 @@ export default {
       const card = this.$refs.questionCard;
       const answers = this.$refs.answersContainer;
 
-      card.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-      answers.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
+      if (card.scrollTo == 'function' || answers.scrollTo == 'function') {
+        card.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        answers.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
+
     },
   },
 };
@@ -167,7 +170,8 @@ export default {
   box-sizing: border-box;
   margin-bottom: 4px;
 }
-.progress-text{
+
+.progress-text {
   color: rgb(126, 142, 158);
   font-size: 11px;
   font-weight: 400;
