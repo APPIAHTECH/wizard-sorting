@@ -49,7 +49,7 @@ const currentQuestion = computed(() => store.state.currentQuestion);
 const scores = computed(() => store.state.scores);
 const questions = computed(() => store.state.questions);
 const loading = computed(() => store.state.loading);
-
+const TIME_TO_WAIT_BEFORE_RESPOND_TO_USER = 200 //mile-seconds
 
 const props = defineProps({
   isOpen: {
@@ -70,7 +70,7 @@ const handleUserMessage = (message) => {
       store.commit('ADD_MESSAGE', {text: `Nice to meet you, ${message}! Let’s begin the test...`, isUser: false});
       store.commit('SET_ASKING_NAME', false);
       showNextQuestion();
-    }, 1000);
+    }, TIME_TO_WAIT_BEFORE_RESPOND_TO_USER);
   } else {
     // Game concluded no more questions to ask then
     store.commit('ADD_MESSAGE', {text: message, isUser: true});
@@ -92,7 +92,7 @@ const handleAnswerSelected = (answer) => {
   setTimeout(() => {
     store.commit('ADD_MESSAGE', {text: randomResponse, isUser: false});
     showNextQuestion();
-  }, 1000);
+  }, TIME_TO_WAIT_BEFORE_RESPOND_TO_USER);
 };
 
 const showNextQuestion = () => {

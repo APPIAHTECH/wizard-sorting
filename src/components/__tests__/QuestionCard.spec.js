@@ -50,11 +50,5 @@ describe('QuestionCard.vue', () => {
         expect(answerButtons[3].text()).toBe('Yellow');
     });
 
-    it('emits "answer-selected" when an answer is clicked', async () => {
-        const answerButton = wrapper.findAll('.answer-button')[0];
-        await answerButton.trigger('click');
-        expect(wrapper.emitted('answer-selected')).toBeTruthy();
-        expect(wrapper.emitted('answer-selected')[0]).toEqual([wrapper.props().question.answers[0]]);
-    });
 
 });

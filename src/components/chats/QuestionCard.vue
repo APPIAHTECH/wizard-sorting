@@ -80,17 +80,14 @@ export default {
     scrollToTop() {
       const card = this.$refs.questionCard;
       const answers = this.$refs.answersContainer;
-
-      if (card.scrollTo == 'function' || answers.scrollTo == 'function') {
-        card.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-        answers.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      }
+      card.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      answers.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
 
     },
   },
