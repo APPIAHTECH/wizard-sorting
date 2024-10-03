@@ -59,9 +59,7 @@ const props = defineProps({
 });
 
 const toggleChat = () => {
-  // Implement your logic to toggle chat
   store.commit('RESET_CHAT');
-  store.dispatch('fetchQuestions');
 };
 
 const handleUserMessage = (message) => {

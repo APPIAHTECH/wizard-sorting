@@ -12,8 +12,9 @@ const store = createStore({
         title: "Sorting hat",
         currentQuestion: null,
         currentQuestionIndex: 0, // Use to track number of questions left.
-        totalQuestions: 1,
+        totalQuestions: 0,
         scores: {g: 0, r: 0, h: 0, s: 0},
+        originalQuestions: [],
         questions: [],
         loading: true,
         houseDescriptions: {
@@ -54,6 +55,9 @@ const store = createStore({
         SET_QUESTIONS(state, questions) {
             state.questions = questions;
         },
+        SET_ORIGINAL_SET_OF_QUESTIONS(state, questions) {
+            state.originalQuestions = questions;
+        },
         SET_LOADING(state, loading) {
             state.loading = loading;
         },
@@ -71,9 +75,9 @@ const store = createStore({
             state.askingName = true;
             state.currentQuestion = null;
             state.scores = {g: 0, r: 0, h: 0, s: 0};
-            state.questions = [];
-            state.loading = true;
+            state.questions = JSON.parse(JSON.stringify(state.originalQuestions)) // deep copy since shift is use on questions, hence we maintain original set of data
             state.currentQuestionIndex = 0;
+            state.totalQuestions = state.originalQuestions.length;
         },
     },
     actions: {
@@ -81,7 +85,8 @@ const store = createStore({
             commit('SET_LOADING', true);
             try {
                 const data = questions
-                commit('SET_QUESTIONS', data);
+                commit('SET_ORIGINAL_SET_OF_QUESTIONS', JSON.parse(JSON.stringify(data)));
+                commit('SET_QUESTIONS', JSON.parse(JSON.stringify(data)));
                 commit('SET_TOTAL_QUESTIONS', data.length);
             } catch (error) {
                 console.error('Error fetching questions:', error);
