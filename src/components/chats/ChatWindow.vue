@@ -180,4 +180,69 @@ store.dispatch('fetchQuestions');
   transform: translateY(100%);
   opacity: 0;
 }
+
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  .chat-window {
+    height: 80vh;
+  }
+
+  .chat-header {
+    padding: 8px;
+  }
+
+  .btn-end {
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-window {
+    height: 70vh;
+    max-width: 100%;
+  }
+
+  .chat-header {
+    padding: 6px;
+  }
+
+  .btn-end {
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-window {
+    height: 60vh;
+    width: 300px;
+  }
+
+  .chat-header {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .btn-end {
+    padding: 2px 5px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .chat-window {
+    height: 60vh;
+    width: 280px;
+  }
+
+  .chat-header {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .btn-end {
+    padding: 2px 5px;
+    font-size: 12px;
+  }
+}
 </style>

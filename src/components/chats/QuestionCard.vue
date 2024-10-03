@@ -174,4 +174,71 @@ export default {
   line-height: 19px;
   margin-bottom: 4px;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  .question-card {
+    height: 700px;
+    padding: 15px;
+  }
+
+  .question-title {
+    font-size: 1.1rem;
+  }
+
+  .answer-button {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .question-card {
+    height: 600px;
+  }
+
+  .question-title {
+    font-size: 1rem;
+  }
+
+  .answer-button {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+
+  .progress-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .question-card {
+    height: 550px;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  .question-title {
+    font-size: 0.95rem;
+  }
+
+  .answer-button {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .question-card {
+    height: 480px;
+  }
+
+  .question-title {
+    font-size: 0.85rem;
+  }
+
+  .answer-button {
+    font-size: 0.75rem;
+    padding: 8px;
+  }
+}
 </style>

@@ -76,4 +76,35 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .input-bar {
+    padding: 8px;
+  }
+
+  .input-bar-input {
+    font-size: 13px;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-bar {
+    padding: 6px;
+  }
+
+  .input-bar-input {
+    font-size: 12px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
 </style>
