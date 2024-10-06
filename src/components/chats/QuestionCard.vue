@@ -96,13 +96,10 @@ export default {
 
 <style scoped>
 .question-card {
-  background-color: #fff;
   padding: 20px;
-  margin: 20px 0;
   max-width: 100%;
   height: 850px;
   overflow: auto;
-  border-top: 2px solid #F1F3F5;
 }
 
 .progress-bar {

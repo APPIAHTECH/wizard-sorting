@@ -1,5 +1,6 @@
 <script setup>
 import {RouterLink, RouterView} from 'vue-router'
+import Introduction from './components/Introduction.vue';
 </script>
 
 <template>
@@ -14,6 +15,10 @@ import {RouterLink, RouterView} from 'vue-router'
   </header>
 
   <RouterView/>
+
+  <main>
+    <Introduction />
+  </main>
 </template>
 
 <style>
