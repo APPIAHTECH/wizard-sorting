@@ -6,6 +6,8 @@ This project is a Vue.js application that simulates a chat-like interface to sor
 
 The app is designed to be visually appealing and maintainable, leveraging Vue 3 and Vite. It incorporates animations for a smooth user experience and responds to various screen sizes.
 
+![img.png](img.png)
+
 ### Key Features
 - **Interactive Chat Interface**: Engages users in a conversation to determine their suitable house.
 - **Dynamic Scoring System**: Utilizes a matching score for each house based on user responses to questions.
