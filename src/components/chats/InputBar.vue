@@ -60,6 +60,7 @@ export default {
   line-height: 17px;
   top: 1px;
   border: none;
+  background: #F1F3F5;
 }
 
 input {

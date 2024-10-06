@@ -8,7 +8,7 @@ import {RouterLink, RouterView} from 'vue-router'
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/chat">Chat</RouterLink> <!-- Added link to Chat -->
+        <RouterLink to="/chat">Chat</RouterLink>
       </nav>
     </div>
   </header>
@@ -17,6 +17,16 @@ import {RouterLink, RouterView} from 'vue-router'
 </template>
 
 <style>
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  z-index: 10;
+}
+nav a{
+  color: white;
+}
 body, p, h1,h2,h3,h4,h5,h6 {
   font-family: 'Roboto', "Lato", sans-serif;
   font-weight: 100;

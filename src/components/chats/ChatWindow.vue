@@ -157,6 +157,7 @@ store.dispatch('fetchQuestions');
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: #F1F3F5;
 }
 
 .chat-header {
